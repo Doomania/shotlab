@@ -149,7 +149,7 @@ function renderGrid(){
   gridEl.innerHTML="";
   MOVES.filter(m=>activeCat==="All"||m.cat===activeCat).forEach(m=>{
     const idx=MOVES.indexOf(m)+1;
-    const card=document.createElement("div");card.style.contentVisibility='auto';card.style.containIntrinsicSize='0 228px';
+    const card=document.createElement("div");
     card.className="card"+(selected.includes(m.id)?" sel":"");card.dataset.demo=m.demo;
     card.innerHTML='<div class="check">&#10003;</div><div class="stage"><div class="frame"><div class="grid-floor"></div><div class="occ"></div><div class="ring"></div><div class="subj2"></div><div class="subj"></div><div class="lens"></div></div></div><div class="meta"><div class="top"><span class="num">'+String(idx).padStart(2,"0")+'</span><span class="name">'+m.name+'</span></div><div class="alias">'+m.alias+' &middot; '+m.cat+'</div><p class="desc">'+m.desc+'</p><p class="feel">'+m.feel+'</p></div>';
     card.setAttribute('role','button');
@@ -408,31 +408,46 @@ function easeInOut(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
 
 /* ---- pause off-screen card animations (perf) ---- */
 if('IntersectionObserver' in window){
-  const aio=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      const stage=e.target.querySelector('.stage');
-      if(stage) stage.style.animationPlayState=e.isIntersecting?'running':'paused';
-      // pause all animated children
-      e.target.querySelectorAll('[style*="animation"],[class]').forEach(el=>{
-        if(!stage||!stage.contains(el)) return;
-        el.style.animationPlayState=e.isIntersecting?'running':'paused';
-      });
+  var _aio=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      var els=e.target.querySelectorAll('.grid-floor,.subj,.subj2,.frame,.lens,.occ,.ring');
+      els.forEach(function(el){ el.style.animationPlayState=e.isIntersecting?'running':'paused'; });
     });
-  },{rootMargin:'200px'});
-  // observe after grid renders
-  const gridObs=new MutationObserver(()=>{
-    document.querySelectorAll('.card:not([data-obs])').forEach(c=>{c.dataset.obs='1';aio.observe(c);});
+  },{rootMargin:'100px'});
+  // Observe cards after grid renders — use MutationObserver
+  var _mobs=new MutationObserver(function(){
+    document.querySelectorAll('.card:not([data-observed])').forEach(function(c){
+      c.dataset.observed='1'; _aio.observe(c);
+    });
   });
-  gridObs.observe(document.getElementById('grid'),{childList:true});
+  var _grid=document.getElementById('grid');
+  if(_grid) _mobs.observe(_grid,{childList:true});
 }
 
-/* load three.js then init */
+/* load three.js LAZILY — only when the Advanced Studio panel opens */
 (function(){
-  const s=document.createElement("script");
-  s.src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
-  s.onload=()=>{ try{init3D();}catch(e){console.error(e);} };
-  s.onerror=()=>{document.getElementById("studio").querySelector(".stagewrap").innerHTML='<div style="padding:40px;font-family:var(--mono);color:var(--dust);font-size:13px">3D engine could not load — check your connection, then reload.</div>';};
-  document.head.appendChild(s);
+  var loaded = false;
+  var advEl = document.getElementById('advStudio');
+  if(!advEl) return;
+  function loadThree(){
+    if(loaded) return;
+    loaded = true;
+    var s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+    s.onload = function(){ try{ init3D(); }catch(e){ console.error('3D init failed:', e); } };
+    s.onerror = function(){
+      var sw = document.getElementById('studio');
+      if(sw) sw.innerHTML = '<div style="padding:40px;font-family:var(--mono);color:var(--dust);font-size:13px">3D engine could not load — check your connection.</div>';
+    };
+    document.head.appendChild(s);
+  }
+  advEl.addEventListener('toggle', function(e){
+    if(e.target.open){
+      loadThree();
+      // also resize after layout is calculated
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){ try{ resize3D(); }catch(_){} }); });
+    }
+  });
 })();
 
 /* ═══════════════════════════════════════════════════

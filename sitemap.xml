@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Shot Lab deploy version: 2026-06-14-v2 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://shotlab-1qu.pages.dev/</loc><changefreq>monthly</changefreq></url>
-  <url><loc>https://shotlab-1qu.pages.dev/camera-moves.html</loc><changefreq>monthly</changefreq></url>
+  <url><loc>https://shotlab-1qu.pages.dev/camera-moves</loc><changefreq>monthly</changefreq></url>
   <url><loc>https://shotlab-1qu.pages.dev/about.html</loc><changefreq>monthly</changefreq></url>
   <url><loc>https://shotlab-1qu.pages.dev/contact.html</loc><changefreq>monthly</changefreq></url>
   <url><loc>https://shotlab-1qu.pages.dev/privacy-policy.html</loc><changefreq>monthly</changefreq></url>
