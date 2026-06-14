@@ -1,0 +1,10 @@
+// Shot Lab — Starter Templates
+window.TEMPLATES = [
+  {name:"Anime battle dash", model:"seedance", subject:"a spiky-haired anime warrior sprinting through a collapsing battlefield", moves:["fastdolly","sidetrack","whip"], style:"high-energy shonen anime with bold speed lines", light:"harsh backlight, drifting embers and dust", pace:"fast", ratio:"16:9"},
+  {name:"Music video performance", model:"kling", subject:"a singer gripping a mic under a lone spotlight on a dark stage", moves:["orbit","dollyin","craneup"], style:"moody cinematic music video", light:"single warm spotlight, deep shadow, light haze", pace:"steady", ratio:"9:16"},
+  {name:"Product reveal", model:"runway", subject:"a sleek smartphone slowly rotating on a pedestal", moves:["orbit","macro","dollyin"], style:"premium product commercial with glossy reflections", light:"soft studio key with a crisp rim light on black", pace:"slow", ratio:"1:1"},
+  {name:"Car commercial", model:"veo", subject:"a matte-black sports car carving a coastal mountain road", moves:["droneover","sidetrack","dive"], style:"premium automotive commercial", light:"golden-hour sun with long shadows", pace:"steady", ratio:"16:9"},
+  {name:"Horror hallway", model:"luma", subject:"a small child standing at the end of a flickering hallway", moves:["dollyin","dutch"], style:"unsettling found-footage horror with grain", light:"flickering overhead tube light, deep darkness", pace:"slow", ratio:"16:9"},
+  {name:"Cyberpunk street walk", model:"pika", subject:"a lone figure in a long coat walking a neon-soaked rain-slick street", moves:["following","pov","fisheye"], style:"cyberpunk with wet neon reflections", light:"pink and cyan neon glow, volumetric mist", pace:"steady", ratio:"9:16"},
+  {name:"Epic transformation", model:"seedance", subject:"a hero erupting with surging energy as their power awakens", moves:["orbit","craneup","snap"], style:"epic anime transformation with a glowing aura", light:"intense rim light, volumetric god rays", pace:"fast", ratio:"16:9"},
+];
