@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://shotlab-1qu.pages.dev/sitemap.xml
