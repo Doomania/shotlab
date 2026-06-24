@@ -701,7 +701,6 @@
 @keyframes d-pov{0%{transform:translateX(-4.5px) rotate(-.7deg)}
 @keyframes d-breathe{from{opacity:.6}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important}
-<<<<<<< HEAD
 
 /* ═══════════════════════════════════════════════
    v2 NEW FEATURE STYLES
@@ -1071,5 +1070,3 @@
 .mod-row-wrap {
   position:relative;
 }
-=======
->>>>>>> 5dd0a96b58c3190fdbc359fd17d6a0271da9b891

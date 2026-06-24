@@ -214,19 +214,10 @@ const gridEl=document.getElementById("grid");
 function renderGrid(){
   gridEl.innerHTML="";
   MOVES.filter(m=>activeCat==="All"||m.cat===activeCat).forEach(m=>{
-<<<<<<< HEAD
     const card=document.createElement("div");if(typeof CAT_COLORS!=="undefined")card.style.setProperty("--cat-c",CAT_COLORS[m.cat]||"#e0a84b");
     card.className="card"+(selected.includes(m.id)?" sel":"");card.dataset.demo=m.demo;
     card.innerHTML='<div class="check">&#10003;</div><div class="stage"><div class="frame"><div class="floor-plane"></div><div class="spotlight"></div><div class="rimlight"></div><div class="ground-shadow"></div><div class="figure2"><div class="fig2-h"></div><div class="fig2-t"></div><div class="fig2-ll"></div><div class="fig2-lr"></div></div><div class="figure"><div class="fig-h"></div><div class="fig-n"></div><div class="fig-t"></div><div class="fig-al"></div><div class="fig-ar"></div><div class="fig-belt"></div><div class="fig-ll"></div><div class="fig-lr"></div><div class="fig-sl"></div><div class="fig-sr"></div></div><div class="occ"></div><div class="ring"></div><div class="hud"><div class="hc tl"></div><div class="hc tr"></div><div class="hc bl"></div><div class="hc br"></div><div class="hcenter"></div></div><div class="vig"></div></div></div><div class="meta"><div class="cat-row"><span class="cat-dot"></span><span class="cat-name">'+(m.alias||m.cat)+'</span></div><div class="move-name">'+m.name+'</div><div class="move-feel">'+m.feel+'</div></div>';
     card.setAttribute('role','button');card.setAttribute('tabindex','0');
-=======
-    const idx=MOVES.indexOf(m)+1;
-    const card=document.createElement("div");if(typeof CAT_COLORS!=="undefined")card.style.setProperty("--cat-c",CAT_COLORS[m.cat]||"#e0a84b");
-    card.className="card"+(selected.includes(m.id)?" sel":"");card.dataset.demo=m.demo;
-    card.innerHTML='<div class="check">&#10003;</div><div class="stage"><div class="frame"><div class="floor-plane"></div><div class="spotlight"></div><div class="rimlight"></div><div class="ground-shadow"></div><div class="figure2"><div class="fig2-h"></div><div class="fig2-t"></div><div class="fig2-ll"></div><div class="fig2-lr"></div></div><div class="figure"><div class="fig-h"></div><div class="fig-n"></div><div class="fig-t"></div><div class="fig-al"></div><div class="fig-ar"></div><div class="fig-belt"></div><div class="fig-ll"></div><div class="fig-lr"></div><div class="fig-sl"></div><div class="fig-sr"></div></div><div class="occ"></div><div class="ring"></div><div class="hud"><div class="hc tl"></div><div class="hc tr"></div><div class="hc bl"></div><div class="hc br"></div><div class="hcenter"></div></div><div class="vig"></div></div></div><div class="meta"><div class="cat-row"><span class="cat-dot"></span><span class="cat-name">'+(m.alias||m.cat)+'</span></div><div class="move-name">'+m.name+'</div><div class="move-feel">'+m.feel+'</div></div>';
-    card.setAttribute('role','button');
-    card.setAttribute('tabindex','0');
->>>>>>> 5dd0a96b58c3190fdbc359fd17d6a0271da9b891
     card.setAttribute('aria-pressed',selected.includes(m.id)?'true':'false');
     card.setAttribute('aria-label',m.name+': '+m.desc.replace(/<[^>]*>/g,''));
     card.onclick=()=>toggleMove(m.id);
@@ -589,26 +580,9 @@ function easeInOut(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
 
 /* pause off-screen card animations */
 if('IntersectionObserver' in window){
-<<<<<<< HEAD
   var _aio=new IntersectionObserver(function(entries){entries.forEach(function(e){var els=e.target.querySelectorAll('.floor-plane,.figure,.figure2,.frame,.occ,.ring');els.forEach(function(el){el.style.animationPlayState=e.isIntersecting?'running':'paused';});});},{rootMargin:'100px'});
   var _mobs=new MutationObserver(function(){document.querySelectorAll('.card:not([data-observed])').forEach(function(c){c.dataset.observed='1';_aio.observe(c);});});
   var _grid=document.getElementById('grid');if(_grid)_mobs.observe(_grid,{childList:true});
-=======
-  var _aio=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      var els=e.target.querySelectorAll('.floor-plane,.figure,.figure2,.frame,.occ,.ring');
-      els.forEach(function(el){ el.style.animationPlayState=e.isIntersecting?'running':'paused'; });
-    });
-  },{rootMargin:'100px'});
-  // Observe cards after grid renders — use MutationObserver
-  var _mobs=new MutationObserver(function(){
-    document.querySelectorAll('.card:not([data-observed])').forEach(function(c){
-      c.dataset.observed='1'; _aio.observe(c);
-    });
-  });
-  var _grid=document.getElementById('grid');
-  if(_grid) _mobs.observe(_grid,{childList:true});
->>>>>>> 5dd0a96b58c3190fdbc359fd17d6a0271da9b891
 }
 
 /* lazy-load Three.js only when 3D panel opens */
