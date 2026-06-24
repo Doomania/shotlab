@@ -34,8 +34,6 @@
 .tab.on{color:#000;background:var(--amber);border-color:var(--amber)}
 
 .view.on{display:block}
-
-/* ---- category pills ---- */
   .pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
   .pill{
     font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
@@ -56,178 +54,47 @@
   .card.sel .num{background:var(--amber);color:#000}
 
   /* demo stage */
-  .stage{height:120px;background:#08080a;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
-  .frame{position:absolute;inset:0}
-  .grid-floor{position:absolute;left:-20%;right:-20%;bottom:0;height:55%;
-    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
-    background-size:28px 18px;transform:perspective(220px) rotateX(58deg);transform-origin:bottom;opacity:.5}
-  .subj{position:absolute;left:50%;top:50%;width:26px;height:54px;margin:-30px 0 0 -13px;border-radius:8px 8px 4px 4px;
-    background:linear-gradient(180deg,var(--amber),#9c6f1f)}
-  .subj::after{content:"";position:absolute;left:50%;top:-13px;width:15px;height:15px;margin-left:-7.5px;border-radius:50%;background:var(--amber)}
-  .lens{position:absolute;left:8px;top:8px;width:14px;height:14px;border:2px solid var(--bone);border-radius:50%;opacity:.7}
   .lens::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--bone)}
 
   /* per-move demo animations driven by data-demo */
-  .card .frame{animation:none}
-  [data-demo="pan"] .grid-floor{animation:d-pan 3.2s ease-in-out infinite alternate}
-  @keyframes d-pan{from{transform:perspective(220px) rotateX(58deg) translateX(40px)}to{transform:perspective(220px) rotateX(58deg) translateX(-40px)}}
-  [data-demo="pan"] .subj{animation:d-pan-s 3.2s ease-in-out infinite alternate}
-  @keyframes d-pan-s{from{transform:translateX(34px)}to{transform:translateX(-34px)}}
-
-@keyframes d-tilt{from{transform:translateY(-20px)}to{transform:translateY(18px)}}
-
-  [data-demo="dollyin"] .subj{animation:d-in 3.2s ease-in-out infinite alternate}
-  @keyframes d-in{from{transform:scale(.7)}to{transform:scale(1.35)}}
-  [data-demo="dollyout"] .subj{animation:d-out 3.2s ease-in-out infinite alternate}
-  @keyframes d-out{from{transform:scale(1.35)}to{transform:scale(.7)}}
-
-  [data-demo="truck"] .subj{animation:d-truck 3s ease-in-out infinite alternate}
-  @keyframes d-truck{from{transform:translateX(-48px)}to{transform:translateX(48px)}}
-  [data-demo="truck"] .grid-floor{animation:d-truckf 3s ease-in-out infinite alternate}
-  @keyframes d-truckf{from{transform:perspective(220px) rotateX(58deg) translateX(-30px)}to{transform:perspective(220px) rotateX(58deg) translateX(30px)}}
-
-  [data-demo="pedestal"] .subj{animation:d-ped 3s ease-in-out infinite alternate}
-  @keyframes d-ped{from{transform:translateY(26px) scale(1.05)}to{transform:translateY(-24px) scale(1.05)}}
-
-  [data-demo="zoom"] .frame{animation:d-zoom 3.2s ease-in-out infinite alternate}
-  @keyframes d-zoom{from{transform:scale(1)}to{transform:scale(1.55)}}
-
-@keyframes d-crane{from{transform:translateY(22px) scale(1.1)}to{transform:translateY(-18px) scale(.85)}}
-
-  [data-demo="arc"] .subj{animation:d-arc 4s linear infinite}
-  @keyframes d-arc{0%{transform:rotateY(0) translateZ(0)}50%{transform:scaleX(.5) skewY(-6deg)}100%{transform:rotateY(360deg)}}
-  [data-demo="arc"] .grid-floor{animation:d-arcf 4s linear infinite}
-  @keyframes d-arcf{from{transform:perspective(220px) rotateX(58deg) rotate(0)}to{transform:perspective(220px) rotateX(58deg) rotate(20deg)}}
-
-  [data-demo="dollyzoom"] .subj{animation:d-dz 3.4s ease-in-out infinite alternate}
-  @keyframes d-dz{from{transform:scale(.9)}to{transform:scale(1.05)}}
-  [data-demo="dollyzoom"] .grid-floor{animation:d-dzf 3.4s ease-in-out infinite alternate}
-  @keyframes d-dzf{from{transform:perspective(220px) rotateX(58deg) scale(.6)}to{transform:perspective(140px) rotateX(58deg) scale(1.5)}}
-
-  [data-demo="handheld"] .frame{animation:d-hand .35s steps(4) infinite}
-  @keyframes d-hand{0%{transform:translate(0,0)}25%{transform:translate(2px,-2px) rotate(.4deg)}50%{transform:translate(-2px,1px) rotate(-.3deg)}75%{transform:translate(1px,2px)}100%{transform:translate(-1px,-1px) rotate(.2deg)}}
-
-  [data-demo="steadi"] .frame{animation:d-steadi 4s ease-in-out infinite alternate}
-  @keyframes d-steadi{from{transform:translateX(-12px) translateY(2px)}to{transform:translateX(12px) translateY(-2px)}}
-  [data-demo="steadi"] .subj{animation:d-truck 4s ease-in-out infinite alternate}
-
-  [data-demo="whip"] .frame{animation:d-whip 1.6s infinite}
-  @keyframes d-whip{0%,40%{transform:translateX(0);filter:blur(0)}55%{transform:translateX(-60px);filter:blur(6px)}70%,100%{transform:translateX(-90px);filter:blur(0)}}
-
-  [data-demo="follow"] .subj{animation:d-foll 3s ease-in-out infinite alternate}
-  @keyframes d-foll{from{transform:translateX(-30px) scale(.95)}to{transform:translateX(30px) scale(.95)}}
-  [data-demo="follow"] .grid-floor{animation:d-truckf 3s ease-in-out infinite alternate}
-
-@keyframes d-air{from{transform:scale(1.4) translateY(10px)}to{transform:scale(.7) translateY(-14px)}}
-[data-demo="static"] .lens{animation:d-blink 2.4s steps(1) infinite}
-  @keyframes d-blink{0%,90%{opacity:.7}95%{opacity:.2}}
-
-  [data-demo="roll"] .frame{animation:d-roll 4s ease-in-out infinite alternate}
-  @keyframes d-roll{from{transform:rotate(-14deg)}to{transform:rotate(14deg)}}
-
-@keyframes d-rack{from{filter:blur(5px);opacity:.6}to{filter:blur(0);opacity:1}}
-
-  /* ---- extra scene props ---- */
-  .subj2{position:absolute;left:50%;top:50%;width:26px;height:54px;margin:-30px 0 0 -13px;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,#7c8aa0,#3a4350);display:none}
+  .cardto{transform:perspective(220px) rotateX(58deg) translateX(-40px)}}to{transform:translateX(-34px)}}to{transform:translateY(18px)}}to{transform:scale(1.35)}}to{transform:scale(.7)}}to{transform:translateX(48px)}}to{transform:perspective(220px) rotateX(58deg) translateX(30px)}}to{transform:translateY(-24px) scale(1.05)}}to{transform:scale(1.55)}}to{transform:translateY(-18px) scale(.85)}}50%{transform:scaleX(.5) skewY(-6deg)}100%{transform:rotateY(360deg)}}to{transform:perspective(220px) rotateX(58deg) rotate(20deg)}}to{transform:scale(1.05)}}to{transform:perspective(140px) rotateX(58deg) scale(1.5)}}25%{transform:translate(2px,-2px) rotate(.4deg)}50%{transform:translate(-2px,1px) rotate(-.3deg)}75%{transform:translate(1px,2px)}100%{transform:translate(-1px,-1px) rotate(.2deg)}}to{transform:translateX(12px) translateY(-2px)}}55%{transform:translateX(-60px);filter:blur(6px)}70%,100%{transform:translateX(-90px);filter:blur(0)}}to{transform:translateX(30px) scale(.95)}}to{transform:scale(.7) translateY(-14px)}}95%{opacity:.2}}to{transform:rotate(14deg)}}to{filter:blur(0);opacity:1}}
   .subj2::after{content:"";position:absolute;left:50%;top:-13px;width:15px;height:15px;margin-left:-7.5px;border-radius:50%;background:#7c8aa0}
-  .occ{position:absolute;top:0;bottom:0;left:0;width:74%;background:linear-gradient(90deg,#0a0a0c,#1c1c24);display:none;z-index:3}
-  .ring{position:absolute;left:50%;top:50%;width:34px;height:34px;margin:-17px 0 0 -17px;border:3px solid var(--bone);border-radius:50%;display:none;opacity:.55;z-index:2}
 
-  /* fast dolly / rush */
-  [data-demo="fastdollyin"] .subj{animation:d-fastin 1.7s cubic-bezier(.6,0,.9,1) infinite}
-  @keyframes d-fastin{0%{transform:scale(.5)}65%{transform:scale(1.7)}100%{transform:scale(1.7)}}
+  /* fast dolly / rush */65%{transform:scale(1.7)}100%{transform:scale(1.7)}}
 
-  /* macro + cosmic scale */
-  [data-demo="macro"] .frame{animation:d-macro 3.6s ease-in infinite}
-  @keyframes d-macro{0%{transform:scale(.9)}100%{transform:scale(4.2)}}
-  [data-demo="cosmic"] .frame{animation:d-cosmic 4.6s ease-in-out infinite}
-  @keyframes d-cosmic{0%{transform:scale(.22)}100%{transform:scale(2.7)}}
+  /* macro + cosmic scale */100%{transform:scale(4.2)}}100%{transform:scale(2.7)}}
 
   /* over the shoulder */
-  [data-demo="ots"] .subj2{display:block;left:20%;top:64%;width:66px;height:90px;filter:blur(2px);background:linear-gradient(180deg,#23272f,#121418)}
-  [data-demo="ots"] .subj2::after{width:38px;height:38px;margin-left:-19px;top:-24px;background:#23272f}
-  [data-demo="ots"] .subj{left:62%;animation:d-in 4s ease-in-out infinite alternate}
 
-  /* fisheye */
-  [data-demo="fisheye"] .stage{background:radial-gradient(circle at 50% 50%,#0c0c10 55%,#000 100%)}
-  [data-demo="fisheye"] .subj{animation:d-fish 3.2s ease-in-out infinite alternate}
-  @keyframes d-fish{from{transform:scaleX(1) scaleY(1)}to{transform:scaleX(1.4) scaleY(.85) translateY(4px)}}
-  [data-demo="fisheye"] .grid-floor{transform:perspective(120px) rotateX(58deg) scale(1.4)}
+  /* fisheye */to{transform:scaleX(1.4) scaleY(.85) translateY(4px)}}
 
-  /* reveal from behind / wipe */
-  [data-demo="wipe"] .occ{display:block;animation:d-wipe 3.6s ease-in-out infinite}
-  @keyframes d-wipe{0%,38%{transform:translateX(0)}100%{transform:translateX(150%)}}
+  /* reveal from behind / wipe */100%{transform:translateX(150%)}}
 
-  /* through shot (fly through aperture) */
-  [data-demo="through"] .ring{display:block;animation:d-through 2.9s ease-in infinite}
-  @keyframes d-through{0%{transform:scale(.5);opacity:.8}100%{transform:scale(8);opacity:0}}
-  [data-demo="through"] .subj{animation:d-in 2.9s ease-in infinite}
+  /* through shot (fly through aperture) */100%{transform:scale(8);opacity:0}}
 
-  /* reveal from blur */
-  [data-demo="blur"] .subj{animation:d-blurr 3.4s ease-in-out infinite}
-  @keyframes d-blurr{0%{filter:blur(8px);opacity:.35}60%,100%{filter:blur(0);opacity:1}}
+  /* reveal from blur */60%,100%{filter:blur(0);opacity:1}}
 
-  /* rack focus (two planes swap) */
-  [data-demo="rackfocus"] .subj2{display:block;left:30%;top:60%;width:38px;height:70px}
-  [data-demo="rackfocus"] .subj{left:68%;top:44%;width:18px;height:38px;margin:-19px 0 0 -9px}
-  [data-demo="rackfocus"] .subj2{animation:d-rf-fg 3.4s ease-in-out infinite alternate}
-  [data-demo="rackfocus"] .subj{animation:d-rf-bg 3.4s ease-in-out infinite alternate}
-  @keyframes d-rf-fg{from{filter:blur(0)}to{filter:blur(5px)}}
-  @keyframes d-rf-bg{from{filter:blur(5px)}to{filter:blur(0)}}
+  /* rack focus (two planes swap) */to{filter:blur(5px)}}to{filter:blur(0)}}
 
-  /* tilt up / down (one-direction loops) */
-  [data-demo="tiltup"] .subj{animation:d-tiltup 3s ease-out infinite}
-  @keyframes d-tiltup{0%{transform:translateY(34px)}100%{transform:translateY(-30px)}}
-  [data-demo="tiltdown"] .subj{animation:d-tiltdn 3s ease-out infinite}
-  @keyframes d-tiltdn{0%{transform:translateY(-30px)}100%{transform:translateY(34px)}}
+  /* tilt up / down (one-direction loops) */100%{transform:translateY(-30px)}}100%{transform:translateY(34px)}}
 
   /* slow cinematic arc */
-  [data-demo="arcslow"] .subj{animation:d-arc 7s linear infinite}
-  [data-demo="arcslow"] .grid-floor{animation:d-arcf 7s linear infinite}
 
-  /* crane up / down */
-  [data-demo="craneup"] .frame{animation:d-craneup 4s ease-in-out infinite}
-  @keyframes d-craneup{0%{transform:translateY(22px) scale(1.12)}100%{transform:translateY(-20px) scale(.82)}}
-  [data-demo="cranedown"] .frame{animation:d-cranedn 4s ease-in-out infinite}
-  @keyframes d-cranedn{0%{transform:translateY(-20px) scale(.82)}100%{transform:translateY(22px) scale(1.12)}}
+  /* crane up / down */100%{transform:translateY(-20px) scale(.82)}}100%{transform:translateY(22px) scale(1.12)}}
 
-  /* snap / crash zoom */
-  [data-demo="snap"] .frame{animation:d-snap 2.3s infinite}
-  @keyframes d-snap{0%,28%{transform:scale(1)}38%{transform:scale(2.2)}88%{transform:scale(2.2)}100%{transform:scale(1)}}
+  /* snap / crash zoom */38%{transform:scale(2.2)}88%{transform:scale(2.2)}100%{transform:scale(1)}}
 
-  /* drone fly-over */
-  [data-demo="droneover"] .grid-floor{transform:perspective(300px) rotateX(70deg) scale(1.4);animation:d-overf 2.4s linear infinite}
-  @keyframes d-overf{from{background-position:0 0}to{background-position:0 36px}}
-  [data-demo="droneover"] .subj{animation:d-overs 2.4s linear infinite}
-  @keyframes d-overs{from{transform:translateY(-46px) scale(.5)}to{transform:translateY(46px) scale(.5)}}
+  /* drone fly-over */to{background-position:0 36px}}to{transform:translateY(46px) scale(.5)}}
 
   /* god's eye top-down */
-  [data-demo="godseye"] .grid-floor{transform:none;inset:0;opacity:.35}
-  [data-demo="godseye"] .subj{width:30px;height:30px;border-radius:50%;margin:-15px 0 0 -15px;background:radial-gradient(circle,var(--amber),#9c6f1f);animation:d-spin 6s linear infinite}
-  [data-demo="godseye"] .subj::after{top:-2px;left:50%;width:6px;height:16px;margin-left:-3px;border-radius:3px}
 
-  /* drone dive (FPV) */
-  [data-demo="dive"] .frame{animation:d-dive 2.6s cubic-bezier(.5,0,1,1) infinite}
-  @keyframes d-dive{0%{transform:scale(.45) translateY(-14px)}100%{transform:scale(2.3) translateY(22px)}}
+  /* drone dive (FPV) */100%{transform:scale(2.3) translateY(22px)}}
 
-  /* leading (subject walks toward us) */
-  [data-demo="leading"] .subj{animation:d-bob 1s ease-in-out infinite}
-  @keyframes d-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-  [data-demo="leading"] .grid-floor{animation:d-floorfwd 1.6s linear infinite}
-  @keyframes d-floorfwd{from{background-position:0 0}to{background-position:0 18px}}
+  /* leading (subject walks toward us) */50%{transform:translateY(-4px)}}to{background-position:0 18px}}
 
-  /* following (subject moves away) */
-  [data-demo="following"] .subj{animation:d-follaway 3s ease-in-out infinite alternate}
-  @keyframes d-follaway{from{transform:scale(1.05) translateY(2px)}to{transform:scale(.8) translateY(-4px)}}
-  [data-demo="following"] .grid-floor{animation:d-floorback 1.6s linear infinite}
-  @keyframes d-floorback{from{background-position:0 18px}to{background-position:0 0}}
+  /* following (subject moves away) */to{transform:scale(.8) translateY(-4px)}}to{background-position:0 0}}
 
-  /* POV walk (sway + bob) */
-  [data-demo="pov"] .frame{animation:d-pov 1.5s ease-in-out infinite}
-  @keyframes d-pov{0%{transform:translateX(-5px) rotate(-.7deg)}25%{transform:translateX(0) translateY(-4px)}50%{transform:translateX(5px) rotate(.7deg)}75%{transform:translateX(0) translateY(-4px)}100%{transform:translateX(-5px) rotate(-.7deg)}}
-  [data-demo="pov"] .grid-floor{animation:d-floorfwd 1.1s linear infinite}
-
-  @keyframes d-spin{to{transform:rotate(360deg)}}
+  /* POV walk (sway + bob) */25%{transform:translateX(0) translateY(-4px)}50%{transform:translateX(5px) rotate(.7deg)}75%{transform:translateX(0) translateY(-4px)}100%{transform:translateX(-5px) rotate(-.7deg)}}}
 
   .meta{padding:13px 14px 15px}
   .top{display:flex;align-items:baseline;gap:8px}
@@ -285,12 +152,11 @@
   .footer{margin-top:34px;border-top:1px solid var(--line);padding-top:14px;font-family:var(--mono);font-size:10.5px;color:var(--dust);letter-spacing:.05em}
   .toast{position:fixed;bottom:64px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--green);color:#000;
     font-family:var(--mono);font-size:12px;padding:9px 16px;border-radius:8px;opacity:0;transition:.25s;z-index:50;pointer-events:none}
-  .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
-  @media (prefers-reduced-motion: reduce){*{animation-duration:.001s!important}}
+  .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}}
 
 
   /* ===== generator / app shell (mobile-first) ===== */
-  .wrap{max-width:760px;margin:0 auto;padding:18px 16px 70px}
+  .wrap{max-width:760px;margin:0 auto;padding:18px 16px 70px;overflow-x:hidden}
   .gen{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 16px 18px;margin-bottom:18px}
   .section-h{font-family:var(--disp);font-size:27px;letter-spacing:.6px;margin:0 0 8px}
   .muted{color:var(--dust);font-size:13px;line-height:1.5;margin:0 0 14px}
@@ -357,3 +223,850 @@
   .why-ok{color:var(--green)}
   .why-warn{color:var(--amber)}
   .why-list strong{color:var(--bone)}
+
+/* ═══════════════════════════════════════
+   STAGE — cinematic miniature set
+   ═══════════════════════════════════════ */
+.stage{
+  height:116px;position:relative;overflow:hidden;
+  background:radial-gradient(ellipse at 50% 15%,#1c1c2c 0%,#0b0b12 100%);
+}
+.frame{position:absolute;inset:0;transform-origin:center}
+
+/* Floor with perspective */
+.floor-plane{
+  position:absolute;left:-25%;right:-25%;bottom:-2px;height:46%;
+  background-image:
+    linear-gradient(rgba(160,148,200,.22) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(160,148,200,.15) 1px,transparent 1px);
+  background-size:20px 13px;
+  transform:perspective(160px) rotateX(56deg);
+  transform-origin:bottom;
+}
+/* Floor horizon glow */
+.floor-plane::after{
+  content:"";position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(200,180,255,.2),transparent);
+}
+
+/* Spotlight from above */
+.spotlight{
+  position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% -10%, rgba(224,168,75,.07) 0%,transparent 68%);
+}
+/* Rim light suggestion */
+.rimlight{
+  position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 80% 40%, rgba(100,120,200,.06) 0%,transparent 55%);
+}
+
+/* Ground shadow under figure */
+.ground-shadow{
+  position:absolute;left:50%;top:54%;
+  width:28px;height:7px;margin-left:-14px;
+  background:rgba(0,0,0,.55);border-radius:50%;
+  filter:blur(3px);pointer-events:none;
+}
+
+/* ═══ HUMAN FIGURE ═══ */
+.figure{
+  position:absolute;left:50%;top:calc(50% - 26px);
+  width:20px;height:52px;margin-left:-10px;
+  transform-origin:center center;
+}
+/* head */
+.fig-h{
+  position:absolute;top:0;left:50%;width:13px;height:13px;
+  margin-left:-6.5px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#f0e8d8,#c8b898);
+}
+/* neck */
+.fig-n{
+  position:absolute;top:12px;left:50%;width:5px;height:4px;
+  margin-left:-2.5px;background:#c0a878;
+}
+/* torso */
+.fig-t{
+  position:absolute;top:15px;left:50%;width:14px;height:19px;
+  margin-left:-7px;border-radius:2px 2px 1px 1px;
+  background:linear-gradient(155deg,#e8b858 0%,#c89030 55%,#9c6f1f 100%);
+}
+/* arms */
+.fig-al{
+  position:absolute;top:16px;left:-1px;width:5.5px;height:16px;
+  background:linear-gradient(180deg,#d4a040,#9c7020);
+  border-radius:2px;transform-origin:top center;transform:rotate(-12deg);
+}
+.fig-ar{
+  position:absolute;top:16px;right:-1px;width:5.5px;height:16px;
+  background:linear-gradient(180deg,#d4a040,#9c7020);
+  border-radius:2px;transform-origin:top center;transform:rotate(12deg);
+}
+/* belt/hips */
+.fig-belt{
+  position:absolute;top:33px;left:50%;width:13px;height:4px;
+  margin-left:-6.5px;background:#2c2840;border-radius:1px;
+}
+/* legs */
+.fig-ll{
+  position:absolute;top:36px;left:2.5px;width:6px;height:17px;
+  background:linear-gradient(180deg,#3a3555,#282438);border-radius:0 0 2px 2px;
+}
+.fig-lr{
+  position:absolute;top:36px;right:2.5px;width:6px;height:17px;
+  background:linear-gradient(180deg,#3a3555,#282438);border-radius:0 0 2px 2px;
+}
+/* shoes */
+.fig-sl{position:absolute;top:51px;left:1px;width:7px;height:3px;background:#1c1820;border-radius:1px}
+.fig-sr{position:absolute;top:51px;right:1px;width:7px;height:3px;background:#1c1820;border-radius:1px}
+
+/* Second figure (OTS / rack focus) */
+.figure2{
+  position:absolute;left:15%;top:calc(50% - 36px);
+  width:32px;height:70px;display:none;opacity:.75;
+  filter:blur(2px);
+}
+.fig2-h{position:absolute;top:0;left:50%;width:18px;height:18px;margin-left:-9px;border-radius:50%;background:#606070}
+.fig2-t{position:absolute;top:17px;left:50%;width:19px;height:24px;margin-left:-9.5px;background:#38384c;border-radius:2px}
+.fig2-ll{position:absolute;top:40px;left:3px;width:7px;height:20px;background:#252535;border-radius:0 0 2px 2px}
+.fig2-lr{position:absolute;top:40px;right:3px;width:7px;height:20px;background:#252535;border-radius:0 0 2px 2px}
+
+/* Occlusion panel (wipe reveal) */
+.occ{position:absolute;top:0;bottom:0;left:0;width:72%;background:linear-gradient(90deg,#08080e,#121220);display:none;z-index:3}
+
+/* Ring (through shot) */
+.ring{position:absolute;left:50%;top:50%;width:30px;height:30px;margin:-15px;border:2px solid rgba(200,190,240,.45);border-radius:50%;display:none;z-index:2}
+
+/* HUD viewfinder corners */
+.hud{position:absolute;inset:0;pointer-events:none;z-index:4}
+.hc{position:absolute;width:10px;height:10px;border-style:solid;border-color:rgba(224,168,75,.55)}
+.hc.tl{top:7px;left:7px;border-width:1.5px 0 0 1.5px}
+.hc.tr{top:7px;right:7px;border-width:1.5px 1.5px 0 0}
+.hc.bl{bottom:7px;left:7px;border-width:0 0 1.5px 1.5px}
+.hc.br{bottom:7px;right:7px;border-width:0 1.5px 1.5px 0}
+/* center crosshair dot */
+.hcenter{position:absolute;left:50%;top:50%;width:4px;height:4px;margin:-2px;border-radius:50%;border:1px solid rgba(224,168,75,.35)}
+
+/* Vignette */
+.vig{position:absolute;inset:0;box-shadow:inset 0 0 36px 10px rgba(0,0,0,.65);pointer-events:none;border-radius:0}
+
+/* ═══════════════════════════════════════
+   PER-MOVE ANIMATIONS
+   ═══════════════════════════════════════ */
+
+/* Pan — camera swivels, scene slides */
+[data-demo=pan] .floor-plane{animation:d-pan-f 3.2s ease-in-out infinite alternate}
+[data-demo=pan] .figure{animation:d-pan-s 3.2s ease-in-out infinite alternate}
+[data-demo=pan] .ground-shadow{animation:d-pan-s 3.2s ease-in-out infinite alternate}
+@keyframes d-pan-f{from{transform:perspective(160px) rotateX(56deg) translateX(28px)}to{transform:perspective(160px) rotateX(56deg) translateX(-28px)}}
+@keyframes d-pan-s{from{transform:translateX(24px)}to{transform:translateX(-24px)}}
+
+/* Tilt Up / Down */
+[data-demo=tiltup] .figure{animation:d-tiltup 2.8s ease-in-out infinite}
+@keyframes d-tiltup{0%{transform:translateY(20px)}60%{transform:translateY(-20px)}100%{transform:translateY(-20px)}}
+[data-demo=tiltdown] .figure{animation:d-tiltdn 2.8s ease-in-out infinite}
+@keyframes d-tiltdn{0%{transform:translateY(-20px)}60%{transform:translateY(20px)}100%{transform:translateY(20px)}}
+
+/* Dolly In — figure grows as camera approaches */
+[data-demo=dollyin] .figure{animation:d-in 3s ease-in-out infinite alternate}
+[data-demo=dollyin] .ground-shadow{animation:d-shadow-grow 3s ease-in-out infinite alternate}
+@keyframes d-in{from{transform:scale(.55)}to{transform:scale(1.5)}}
+@keyframes d-shadow-grow{from{transform:scaleX(.5);opacity:.3}to{transform:scaleX(1.5);opacity:.7}}
+
+/* Dolly Out */
+[data-demo=dollyout] .figure{animation:d-out 3s ease-in-out infinite alternate}
+[data-demo=dollyout] .ground-shadow{animation:d-shadow-shrink 3s ease-in-out infinite alternate}
+@keyframes d-out{from{transform:scale(1.5)}to{transform:scale(.45)}}
+@keyframes d-shadow-shrink{from{transform:scaleX(1.5);opacity:.7}to{transform:scaleX(.4);opacity:.2}}
+
+/* Fast Dolly In — Rush */
+[data-demo=fastdolly] .figure{animation:d-rush 1.5s cubic-bezier(.55,0,.9,1) infinite}
+[data-demo=fastdolly] .ground-shadow{animation:d-rush-s 1.5s cubic-bezier(.55,0,.9,1) infinite}
+@keyframes d-rush{0%{transform:scale(.35)}70%{transform:scale(2)}100%{transform:scale(2)}}
+@keyframes d-rush-s{0%{transform:scaleX(.3);opacity:.2}70%{transform:scaleX(2);opacity:.8}100%{transform:scaleX(2);opacity:.8}}
+
+/* Truck left/right */
+[data-demo=truck] .figure{animation:d-truck 3s ease-in-out infinite alternate}
+[data-demo=truck] .ground-shadow{animation:d-truck 3s ease-in-out infinite alternate}
+[data-demo=truck] .floor-plane{animation:d-truckf 3s ease-in-out infinite alternate}
+@keyframes d-truck{from{transform:translateX(-36px)}to{transform:translateX(36px)}}
+@keyframes d-truckf{from{transform:perspective(160px) rotateX(56deg) translateX(-22px)}to{transform:perspective(160px) rotateX(56deg) translateX(22px)}}
+
+/* Pedestal up/down */
+[data-demo=pedestal] .figure{animation:d-ped 3s ease-in-out infinite alternate}
+@keyframes d-ped{from{transform:translateY(18px)}to{transform:translateY(-18px)}}
+
+/* Zoom */
+[data-demo=zoom] .frame{animation:d-zoom 3.2s ease-in-out infinite alternate}
+@keyframes d-zoom{from{transform:scale(1)}to{transform:scale(1.7)}}
+
+/* Snap Zoom */
+[data-demo=snap] .frame{animation:d-snap 2.2s infinite}
+@keyframes d-snap{0%,28%{transform:scale(1)}40%{transform:scale(2.4)}86%{transform:scale(2.4)}100%{transform:scale(1)}}
+
+/* Crane Up */
+[data-demo=craneup] .frame{animation:d-craneup 4s ease-in-out infinite}
+@keyframes d-craneup{0%{transform:translateY(18px) scale(1.12)}100%{transform:translateY(-18px) scale(.78)}}
+
+/* Crane Down */
+[data-demo=cranedown] .frame{animation:d-cranedn 4s ease-in-out infinite}
+@keyframes d-cranedn{0%{transform:translateY(-18px) scale(.78)}100%{transform:translateY(18px) scale(1.12)}}
+
+/* Orbit / Arc — figure moves side to side with perspective squish */
+[data-demo=arc] .figure{animation:d-arc 4.2s linear infinite}
+[data-demo=arc] .ground-shadow{animation:d-arc-s 4.2s linear infinite}
+[data-demo=arc] .floor-plane{animation:d-arcf 4.2s linear infinite}
+@keyframes d-arc{0%{transform:translateX(-28px) scaleX(.95)}25%{transform:translateX(-14px) scaleX(.62)}50%{transform:translateX(0) scaleX(.42)}75%{transform:translateX(14px) scaleX(.62)}100%{transform:translateX(28px) scaleX(.95)}}
+@keyframes d-arc-s{0%{transform:translateX(-28px) scaleX(.9)}50%{transform:translateX(0) scaleX(.4)}100%{transform:translateX(28px) scaleX(.9)}}
+@keyframes d-arcf{from{transform:perspective(160px) rotateX(56deg) rotate(0)}to{transform:perspective(160px) rotateX(56deg) rotate(12deg)}}
+
+/* Slow arc (same but slower) */
+[data-demo=arcslow] .figure{animation:d-arc 8s linear infinite}
+[data-demo=arcslow] .ground-shadow{animation:d-arc-s 8s linear infinite}
+[data-demo=arcslow] .floor-plane{animation:d-arcf 8s linear infinite}
+
+/* 360 Hero Spin */
+[data-demo=hero360] .figure{animation:d-arc 3s linear infinite}
+[data-demo=hero360] .ground-shadow{animation:d-arc-s 3s linear infinite}
+[data-demo=hero360] .floor-plane{animation:d-arcf 3s linear infinite}
+
+/* Vertigo Dolly Zoom */
+[data-demo=dollyzoom] .figure{animation:d-in 3.4s ease-in-out infinite alternate}
+[data-demo=dollyzoom] .floor-plane{animation:d-dzf 3.4s ease-in-out infinite alternate}
+@keyframes d-dzf{from{transform:perspective(160px) rotateX(56deg) scale(.5)}to{transform:perspective(90px) rotateX(56deg) scale(1.7)}}
+
+/* Handheld */
+[data-demo=handheld] .frame{animation:d-hand .32s steps(4) infinite}
+@keyframes d-hand{0%{transform:translate(0,0) rotate(0)}25%{transform:translate(2.5px,-2px) rotate(.5deg)}50%{transform:translate(-2px,1.5px) rotate(-.4deg)}75%{transform:translate(1.5px,2px) rotate(.3deg)}100%{transform:translate(-1px,-1.5px) rotate(-.2deg)}}
+
+/* Steadicam */
+[data-demo=steadi] .frame{animation:d-steadi 4.2s ease-in-out infinite alternate}
+[data-demo=steadi] .figure{animation:d-truck 4.2s ease-in-out infinite alternate}
+@keyframes d-steadi{from{transform:translateX(-9px) translateY(1.5px)}to{transform:translateX(9px) translateY(-1.5px)}}
+
+/* Whip Pan */
+[data-demo=whip] .frame{animation:d-whip 1.6s infinite}
+@keyframes d-whip{0%,36%{transform:translateX(0) skewY(0);filter:blur(0)}50%{transform:translateX(-56px) skewY(-2deg);filter:blur(6px)}64%,100%{transform:translateX(-88px);filter:blur(0)}}
+
+/* Side Tracking / Following */
+[data-demo=follow] .figure{animation:d-follow 3s ease-in-out infinite alternate}
+[data-demo=follow] .ground-shadow{animation:d-follow 3s ease-in-out infinite alternate}
+[data-demo=follow] .floor-plane{animation:d-truckf 3s ease-in-out infinite alternate}
+@keyframes d-follow{from{transform:translateX(-28px)}to{transform:translateX(28px)}}
+
+/* Aerial / Drone Fly-Over */
+[data-demo=aerial] .frame{animation:d-air 5s ease-in-out infinite alternate}
+[data-demo=aerial] .floor-plane{opacity:.6;transform:perspective(280px) rotateX(68deg)}
+@keyframes d-air{from{transform:scale(1.45) translateY(8px)}to{transform:scale(.62) translateY(-12px)}}
+
+/* Dutch Angle */
+[data-demo=roll] .frame{animation:d-roll 4.2s ease-in-out infinite alternate}
+@keyframes d-roll{from{transform:rotate(-15deg)}to{transform:rotate(15deg)}}
+
+/* Rack Focus */
+[data-demo=rackfocus] .figure2{display:block}
+[data-demo=rackfocus] .figure{
+  left:65%;top:calc(50% - 18px);width:13px;height:36px;margin-left:-6.5px;
+  animation:d-rf-bg 3.4s ease-in-out infinite alternate;
+}
+[data-demo=rackfocus] .figure .fig-h{width:9px;height:9px;margin-left:-4.5px}
+[data-demo=rackfocus] .figure .fig-t{width:10px;margin-left:-5px;height:14px}
+[data-demo=rackfocus] .figure .fig-al,.fig-ar,[data-demo=rackfocus] .figure .fig-belt,[data-demo=rackfocus] .figure .fig-ll,[data-demo=rackfocus] .figure .fig-lr,[data-demo=rackfocus] .figure .fig-sl,[data-demo=rackfocus] .figure .fig-sr{display:none}
+[data-demo=rackfocus] .figure2{animation:d-rf-fg 3.4s ease-in-out infinite alternate}
+@keyframes d-rf-fg{from{filter:blur(0) brightness(1)}to{filter:blur(4.5px) brightness(.7)}}
+@keyframes d-rf-bg{from{filter:blur(4.5px) brightness(.6)}to{filter:blur(0) brightness(1)}}
+
+/* Macro Zoom */
+[data-demo=macro] .frame{animation:d-macro 3.6s ease-in infinite}
+@keyframes d-macro{0%{transform:scale(.9)}100%{transform:scale(5)}}
+
+/* Cosmic Hyper Zoom */
+[data-demo=cosmic] .frame{animation:d-cosmic 4.4s ease-in-out infinite}
+@keyframes d-cosmic{0%{transform:scale(.18)}100%{transform:scale(3)}}
+
+/* Fisheye */
+[data-demo=fisheye] .frame{animation:d-fish 3.2s ease-in-out infinite alternate}
+[data-demo=fisheye] .floor-plane{transform:perspective(90px) rotateX(56deg) scaleX(1.5)}
+@keyframes d-fish{from{transform:scaleX(1) scaleY(1)}to{transform:scaleX(1.5) scaleY(.78)}}
+
+/* Reveal from Behind (wipe) */
+[data-demo=wipe] .occ{display:block;animation:d-wipe 3.6s ease-in-out infinite}
+@keyframes d-wipe{0%,34%{transform:translateX(0)}100%{transform:translateX(152%)}}
+
+/* Through Shot */
+[data-demo=through] .ring{display:block;animation:d-through 2.8s ease-in infinite}
+[data-demo=through] .figure{animation:d-in 2.8s ease-in infinite}
+@keyframes d-through{0%{transform:scale(.35);opacity:.9}100%{transform:scale(9);opacity:0}}
+
+/* Reveal from Blur */
+[data-demo=blur] .figure{animation:d-blurr 3.4s ease-in-out infinite}
+[data-demo=blur] .spotlight{animation:d-spotlight 3.4s ease-in-out infinite}
+@keyframes d-blurr{0%{filter:blur(8px) brightness(.35)}65%,100%{filter:blur(0) brightness(1)}}
+@keyframes d-spotlight{0%{opacity:0}65%,100%{opacity:1}}
+
+/* OTS */
+[data-demo=ots] .figure2{display:block;left:10%;top:calc(50% - 46px);width:44px;height:82px;filter:blur(2px);opacity:.65}
+[data-demo=ots] .figure{left:64%;animation:d-in 4.2s ease-in-out infinite alternate}
+
+/* Drone Fly-Over */
+[data-demo=droneover] .floor-plane{animation:d-dronef 2s linear infinite}
+[data-demo=droneover] .figure{animation:d-dronesubj 2s linear infinite}
+@keyframes d-dronef{from{background-position:0 0}to{background-position:0 14px}}
+@keyframes d-dronesubj{from{transform:scale(.45) translateY(-40px)}to{transform:scale(.45) translateY(46px)}}
+
+/* God's Eye — top-down */
+[data-demo=godseye] .figure{
+  top:calc(50% - 10px);
+  animation:d-spin 5.5s linear infinite;
+}
+[data-demo=godseye] .figure .fig-h{
+  width:20px;height:20px;margin-left:-10px;
+  background:radial-gradient(circle at 40% 35%,#e8d090,#c89030);
+}
+[data-demo=godseye] .figure .fig-n,.fig-t,.fig-al,.fig-ar,.fig-belt,.fig-ll,.fig-lr,.fig-sl,.fig-sr{opacity:0}
+[data-demo=godseye] .floor-plane{transform:none;height:100%;opacity:.25}
+[data-demo=godseye] .ground-shadow{display:none}
+@keyframes d-spin{to{transform:rotate(360deg)}}
+
+/* FPV Dive */
+[data-demo=dive] .frame{animation:d-dive 2.5s cubic-bezier(.45,0,1,1) infinite}
+@keyframes d-dive{0%{transform:scale(.38) translateY(-14px)}100%{transform:scale(2.6) translateY(22px)}}
+
+/* Leading Shot */
+[data-demo=leading] .floor-plane{animation:d-floorfwd 1.4s linear infinite}
+[data-demo=leading] .figure{animation:d-bob 1.1s ease-in-out infinite}
+@keyframes d-floorfwd{from{background-position:0 0}to{background-position:0 13px}}
+@keyframes d-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+/* Following Shot */
+[data-demo=following] .floor-plane{animation:d-floorback 1.4s linear infinite}
+[data-demo=following] .figure{animation:d-follaway 3.2s ease-in-out infinite alternate}
+@keyframes d-floorback{from{background-position:0 13px}to{background-position:0 0}}
+@keyframes d-follaway{from{transform:scale(1.05)}to{transform:scale(.68) translateY(-4px)}}
+
+/* Low Angle Push-In */
+[data-demo=lowangle] .figure{animation:d-in 3s ease-in-out infinite alternate}
+[data-demo=lowangle] .floor-plane{transform:perspective(90px) rotateX(68deg);opacity:.8}
+[data-demo=lowangle] .stage{background:radial-gradient(ellipse at 50% 120%,#1c1c2c,#080810)}
+
+/* High Angle Pull-Back */
+[data-demo=highangle] .figure{animation:d-out 3s ease-in-out infinite alternate}
+[data-demo=highangle] .floor-plane{transform:perspective(280px) rotateX(68deg);opacity:.6}
+
+/* POV Walk */
+[data-demo=pov] .frame{animation:d-pov 1.45s ease-in-out infinite}
+[data-demo=pov] .floor-plane{animation:d-floorfwd 1s linear infinite}
+@keyframes d-pov{0%{transform:translateX(-4.5px) rotate(-.7deg)}25%{transform:translateX(0) translateY(-3.5px)}50%{transform:translateX(4.5px) rotate(.7deg)}75%{transform:translateX(0) translateY(-3.5px)}100%{transform:translateX(-4.5px) rotate(-.7deg)}}
+
+/* Static — breathing spotlight only */
+[data-demo=static] .spotlight{animation:d-breathe 3s ease-in-out infinite alternate}
+@keyframes d-breathe{from{opacity:.6}to{opacity:1.2}}
+
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important}}
+
+/* ══ CARD META ══ */
+
+
+/* per-move animations */
+[data-demo=pan] .floor-plane{animation:d-pan-f 3.2s ease-in-out infinite alternate}
+[data-demo=pan] .figure{animation:d-pan-s 3.2s ease-in-out infinite alternate}
+[data-demo=pan] .ground-shadow{animation:d-pan-s 3.2s ease-in-out infinite alternate}
+[data-demo=tiltup] .figure{animation:d-tiltup 2.8s ease-in-out infinite}
+[data-demo=tiltdown] .figure{animation:d-tiltdn 2.8s ease-in-out infinite}
+[data-demo=dollyin] .figure{animation:d-in 3s ease-in-out infinite alternate}
+[data-demo=dollyin] .ground-shadow{animation:d-shadow-grow 3s ease-in-out infinite alternate}
+[data-demo=dollyout] .figure{animation:d-out 3s ease-in-out infinite alternate}
+[data-demo=dollyout] .ground-shadow{animation:d-shadow-shrink 3s ease-in-out infinite alternate}
+[data-demo=fastdolly] .figure{animation:d-rush 1.5s cubic-bezier(.55,0,.9,1) infinite}
+[data-demo=fastdolly] .ground-shadow{animation:d-rush-s 1.5s cubic-bezier(.55,0,.9,1) infinite}
+[data-demo=truck] .figure{animation:d-truck 3s ease-in-out infinite alternate}
+[data-demo=truck] .ground-shadow{animation:d-truck 3s ease-in-out infinite alternate}
+[data-demo=truck] .floor-plane{animation:d-truckf 3s ease-in-out infinite alternate}
+[data-demo=pedestal] .figure{animation:d-ped 3s ease-in-out infinite alternate}
+[data-demo=zoom] .frame{animation:d-zoom 3.2s ease-in-out infinite alternate}
+[data-demo=snap] .frame{animation:d-snap 2.2s infinite}
+[data-demo=craneup] .frame{animation:d-craneup 4s ease-in-out infinite}
+[data-demo=cranedown] .frame{animation:d-cranedn 4s ease-in-out infinite}
+[data-demo=arc] .figure{animation:d-arc 4.2s linear infinite}
+[data-demo=arc] .ground-shadow{animation:d-arc-s 4.2s linear infinite}
+[data-demo=arc] .floor-plane{animation:d-arcf 4.2s linear infinite}
+[data-demo=arcslow] .figure{animation:d-arc 8s linear infinite}
+[data-demo=arcslow] .ground-shadow{animation:d-arc-s 8s linear infinite}
+[data-demo=arcslow] .floor-plane{animation:d-arcf 8s linear infinite}
+[data-demo=hero360] .figure{animation:d-arc 3s linear infinite}
+[data-demo=hero360] .ground-shadow{animation:d-arc-s 3s linear infinite}
+[data-demo=hero360] .floor-plane{animation:d-arcf 3s linear infinite}
+[data-demo=dollyzoom] .figure{animation:d-in 3.4s ease-in-out infinite alternate}
+[data-demo=dollyzoom] .floor-plane{animation:d-dzf 3.4s ease-in-out infinite alternate}
+[data-demo=handheld] .frame{animation:d-hand .32s steps(4) infinite}
+[data-demo=steadi] .frame{animation:d-steadi 4.2s ease-in-out infinite alternate}
+[data-demo=steadi] .figure{animation:d-truck 4.2s ease-in-out infinite alternate}
+[data-demo=whip] .frame{animation:d-whip 1.6s infinite}
+[data-demo=follow] .figure{animation:d-follow 3s ease-in-out infinite alternate}
+[data-demo=follow] .ground-shadow{animation:d-follow 3s ease-in-out infinite alternate}
+[data-demo=follow] .floor-plane{animation:d-truckf 3s ease-in-out infinite alternate}
+[data-demo=aerial] .frame{animation:d-air 5s ease-in-out infinite alternate}
+[data-demo=aerial] .floor-plane{opacity:.6;transform:perspective(280px) rotateX(68deg)}
+[data-demo=roll] .frame{animation:d-roll 4.2s ease-in-out infinite alternate}
+[data-demo=rackfocus] .figure2{display:block}
+[data-demo=rackfocus] .figure{
+  left:65%;top:calc(50% - 18px);width:13px;height:36px;margin-left:-6.5px;
+  animation:d-rf-bg 3.4s ease-in-out infinite alternate;
+}
+[data-demo=rackfocus] .figure .fig-h{width:9px;height:9px;margin-left:-4.5px}
+[data-demo=rackfocus] .figure .fig-t{width:10px;margin-left:-5px;height:14px}
+[data-demo=rackfocus] .figure .fig-al,.fig-ar,[data-demo=rackfocus] .figure .fig-belt,[data-demo=rackfocus] .figure .fig-ll,[data-demo=rackfocus] .figure .fig-lr,[data-demo=rackfocus] .figure .fig-sl,[data-demo=rackfocus] .figure .fig-sr{display:none}
+[data-demo=rackfocus] .figure2{animation:d-rf-fg 3.4s ease-in-out infinite alternate}
+[data-demo=macro] .frame{animation:d-macro 3.6s ease-in infinite}
+[data-demo=cosmic] .frame{animation:d-cosmic 4.4s ease-in-out infinite}
+[data-demo=fisheye] .frame{animation:d-fish 3.2s ease-in-out infinite alternate}
+[data-demo=fisheye] .floor-plane{transform:perspective(90px) rotateX(56deg) scaleX(1.5)}
+[data-demo=wipe] .occ{display:block;animation:d-wipe 3.6s ease-in-out infinite}
+[data-demo=through] .ring{display:block;animation:d-through 2.8s ease-in infinite}
+[data-demo=through] .figure{animation:d-in 2.8s ease-in infinite}
+[data-demo=blur] .figure{animation:d-blurr 3.4s ease-in-out infinite}
+[data-demo=blur] .spotlight{animation:d-spotlight 3.4s ease-in-out infinite}
+[data-demo=ots] .figure2{display:block;left:10%;top:calc(50% - 46px);width:44px;height:82px;filter:blur(2px);opacity:.65}
+[data-demo=ots] .figure{left:64%;animation:d-in 4.2s ease-in-out infinite alternate}
+[data-demo=droneover] .floor-plane{animation:d-dronef 2s linear infinite}
+[data-demo=droneover] .figure{animation:d-dronesubj 2s linear infinite}
+[data-demo=godseye] .figure{
+  top:calc(50% - 10px);
+  animation:d-spin 5.5s linear infinite;
+}
+[data-demo=godseye] .figure .fig-h{
+  width:20px;height:20px;margin-left:-10px;
+  background:radial-gradient(circle at 40% 35%,#e8d090,#c89030);
+}
+[data-demo=godseye] .figure .fig-n,.fig-t,.fig-al,.fig-ar,.fig-belt,.fig-ll,.fig-lr,.fig-sl,.fig-sr{opacity:0}
+[data-demo=godseye] .floor-plane{transform:none;height:100%;opacity:.25}
+[data-demo=godseye] .ground-shadow{display:none}
+[data-demo=dive] .frame{animation:d-dive 2.5s cubic-bezier(.45,0,1,1) infinite}
+[data-demo=leading] .floor-plane{animation:d-floorfwd 1.4s linear infinite}
+[data-demo=leading] .figure{animation:d-bob 1.1s ease-in-out infinite}
+[data-demo=following] .floor-plane{animation:d-floorback 1.4s linear infinite}
+[data-demo=following] .figure{animation:d-follaway 3.2s ease-in-out infinite alternate}
+[data-demo=lowangle] .figure{animation:d-in 3s ease-in-out infinite alternate}
+[data-demo=lowangle] .floor-plane{transform:perspective(90px) rotateX(68deg);opacity:.8}
+[data-demo=lowangle] .stage{background:radial-gradient(ellipse at 50% 120%,#1c1c2c,#080810)}
+[data-demo=highangle] .figure{animation:d-out 3s ease-in-out infinite alternate}
+[data-demo=highangle] .floor-plane{transform:perspective(280px) rotateX(68deg);opacity:.6}
+[data-demo=pov] .frame{animation:d-pov 1.45s ease-in-out infinite}
+[data-demo=pov] .floor-plane{animation:d-floorfwd 1s linear infinite}
+[data-demo=static] .spotlight{animation:d-breathe 3s ease-in-out infinite alternate}
+@keyframes d-pan-f{from{transform:perspective(160px) rotateX(56deg) translateX(28px)}
+@keyframes d-pan-s{from{transform:translateX(24px)}
+@keyframes d-tiltup{0%{transform:translateY(20px)}
+@keyframes d-tiltdn{0%{transform:translateY(-20px)}
+@keyframes d-in{from{transform:scale(.55)}
+@keyframes d-shadow-grow{from{transform:scaleX(.5);opacity:.3}
+@keyframes d-out{from{transform:scale(1.5)}
+@keyframes d-shadow-shrink{from{transform:scaleX(1.5);opacity:.7}
+@keyframes d-rush{0%{transform:scale(.35)}
+@keyframes d-rush-s{0%{transform:scaleX(.3);opacity:.2}
+@keyframes d-truck{from{transform:translateX(-36px)}
+@keyframes d-truckf{from{transform:perspective(160px) rotateX(56deg) translateX(-22px)}
+@keyframes d-ped{from{transform:translateY(18px)}
+@keyframes d-zoom{from{transform:scale(1)}
+@keyframes d-snap{0%,28%{transform:scale(1)}
+@keyframes d-craneup{0%{transform:translateY(18px) scale(1.12)}
+@keyframes d-cranedn{0%{transform:translateY(-18px) scale(.78)}
+@keyframes d-arc{0%{transform:translateX(-28px) scaleX(.95)}
+@keyframes d-arc-s{0%{transform:translateX(-28px) scaleX(.9)}
+@keyframes d-arcf{from{transform:perspective(160px) rotateX(56deg) rotate(0)}
+@keyframes d-dzf{from{transform:perspective(160px) rotateX(56deg) scale(.5)}
+@keyframes d-hand{0%{transform:translate(0,0) rotate(0)}
+@keyframes d-steadi{from{transform:translateX(-9px) translateY(1.5px)}
+@keyframes d-whip{0%,36%{transform:translateX(0) skewY(0);filter:blur(0)}
+@keyframes d-follow{from{transform:translateX(-28px)}
+@keyframes d-air{from{transform:scale(1.45) translateY(8px)}
+@keyframes d-roll{from{transform:rotate(-15deg)}
+@keyframes d-rf-fg{from{filter:blur(0) brightness(1)}
+@keyframes d-rf-bg{from{filter:blur(4.5px) brightness(.6)}
+@keyframes d-macro{0%{transform:scale(.9)}
+@keyframes d-cosmic{0%{transform:scale(.18)}
+@keyframes d-fish{from{transform:scaleX(1) scaleY(1)}
+@keyframes d-wipe{0%,34%{transform:translateX(0)}
+@keyframes d-through{0%{transform:scale(.35);opacity:.9}
+@keyframes d-blurr{0%{filter:blur(8px) brightness(.35)}
+@keyframes d-spotlight{0%{opacity:0}
+@keyframes d-dronef{from{background-position:0 0}
+@keyframes d-dronesubj{from{transform:scale(.45) translateY(-40px)}
+@keyframes d-spin{to{transform:rotate(360deg)}
+@keyframes d-dive{0%{transform:scale(.38) translateY(-14px)}
+@keyframes d-floorfwd{from{background-position:0 0}
+@keyframes d-bob{0%,100%{transform:translateY(0)}
+@keyframes d-floorback{from{background-position:0 13px}
+@keyframes d-follaway{from{transform:scale(1.05)}
+@keyframes d-pov{0%{transform:translateX(-4.5px) rotate(-.7deg)}
+@keyframes d-breathe{from{opacity:.6}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important}
+
+/* ═══════════════════════════════════════════════
+   v2 NEW FEATURE STYLES
+   ═══════════════════════════════════════════════ */
+
+/* ---- Base .btn (used by 3D studio + share) ---- */
+.btn{font-family:var(--mono);font-size:12px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--bone);background:var(--panel2);border:1px solid var(--line);
+  padding:9px 13px;border-radius:8px;cursor:pointer;transition:.15s}
+.btn:hover{border-color:var(--amber)}
+.btn.primary{background:var(--amber);color:#000;border-color:var(--amber)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.ghost{background:none;color:var(--dust)}
+.btn.ghost:hover{color:var(--amber);border-color:var(--amber)}
+.row{display:flex;justify-content:flex-end;margin-top:8px}
+.lede{font-size:13.5px;color:var(--dust);line-height:1.6;margin:0 0 18px}
+
+/* ---- Mode tabs (Generator / Transitions) ---- */
+.mode-tabs{display:flex;border-bottom:1px solid var(--line);margin-bottom:18px;gap:0}
+.mode-tab{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--dust);background:none;border:none;border-bottom:2px solid transparent;
+  padding:11px 16px;cursor:pointer;transition:.15s;margin-bottom:-1px}
+.mode-tab:hover{color:var(--bone)}
+.mode-tab.on{color:var(--amber);border-bottom-color:var(--amber)}
+.mode-view{display:none}
+.mode-view.on{display:block}
+
+/* ---- Sub-collapsibles (Camera / Enhancers / Negative) ---- */
+.sub-adv{margin:12px 0 0;border:1px solid var(--line);border-radius:10px;
+  background:var(--panel2);overflow:hidden}
+.sub-adv>summary{list-style:none;cursor:pointer;padding:11px 14px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--dust);display:flex;align-items:center;gap:9px;transition:.15s;user-select:none}
+.sub-adv>summary::-webkit-details-marker{display:none}
+.sub-adv[open]>summary{color:var(--bone)}
+.sub-adv>summary .tagx{font-size:9px;color:var(--dust);background:var(--ink);
+  border:1px solid var(--line);padding:2px 7px;border-radius:999px;
+  letter-spacing:.07em;font-family:var(--mono)}
+.sub-adv>summary .chev{margin-left:auto;font-size:11px;transition:transform .2s}
+.sub-adv[open]>summary .chev{transform:rotate(180deg)}
+.sub-body{padding:10px 14px 14px}
+
+/* ---- Camera & Lens grid ---- */
+.cam-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:480px){.cam-grid{grid-template-columns:1fr}}
+.cam-group label{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--dust);display:block;margin:0 0 5px}
+.cam-group .sel{font-size:13px;padding:9px 10px}
+
+/* ---- Chip system (Enhancers, Negatives, Transitions) ---- */
+.chip-cat{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--dust);margin:12px 0 6px;display:block}
+.chip-cat:first-child{margin-top:2px}
+.chip-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:2px}
+.chip{font-family:var(--body);font-size:12.5px;color:var(--bone);background:var(--ink);
+  border:1px solid var(--line);padding:6px 11px;border-radius:7px;cursor:pointer;
+  transition:.12s;white-space:nowrap;line-height:1.3}
+.chip:hover{border-color:#3d3d48}
+.chip.on{background:rgba(224,168,75,.14);border-color:var(--amber);color:var(--amber)}
+.neg-chip.on{background:rgba(214,71,58,.12);border-color:var(--red);color:#f0b3ac}
+.chip-zh{font-size:10px;color:var(--dust);margin-left:3px;font-family:var(--mono)}
+.chip.on .chip-zh{color:rgba(224,168,75,.7)}
+.neg-chip.on .chip-zh{color:rgba(240,179,172,.7)}
+.chip-note{font-size:11.5px;color:var(--dust);margin:9px 0 0;line-height:1.5}
+
+/* ---- CTA row — Copy + Copy & Open side by side ---- */
+.cta-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}
+@media(max-width:420px){.cta-row{grid-template-columns:1fr}}
+.copy-open-btn{font-family:var(--body);font-weight:600;font-size:13px;
+  background:var(--amber);color:#000;border:none;padding:12px 10px;
+  border-radius:9px;cursor:pointer;transition:.15s;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+.copy-open-btn:hover{filter:brightness(1.1)}
+
+/* ---- Share link + Save/Load row ---- */
+.share-btn{display:block;width:100%;margin-top:7px;font-family:var(--mono);
+  font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--dust);
+  background:none;border:1px solid var(--line);padding:9px;border-radius:8px;
+  cursor:pointer;transition:.15s;text-align:center}
+.share-btn:hover{border-color:var(--amber);color:var(--amber)}
+.saveload-row{display:flex;gap:8px;margin-top:7px}
+.ghost-sm{flex:1;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--dust);background:none;border:1px solid var(--line);
+  padding:9px 10px;border-radius:8px;cursor:pointer;transition:.15s;text-align:center;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.ghost-sm:hover{border-color:var(--amber);color:var(--amber)}
+
+/* ---- Transitions grid container ---- */
+.trans-grid{margin:6px 0 12px;min-height:32px}
+
+/* ---- Card meta — new class names ---- */
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;
+  background:var(--cat-c,var(--amber));border-radius:9px 9px 0 0;pointer-events:none}
+.cat-row{display:flex;align-items:center;gap:6px;margin-bottom:5px}
+.cat-dot{width:7px;height:7px;border-radius:50%;background:var(--cat-c,var(--amber));flex:0 0 auto}
+.cat-name{font-family:var(--mono);font-size:10px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--dust)}
+.move-name{font-family:var(--disp);font-size:22px;letter-spacing:.5px;
+  line-height:1;margin:0 0 5px;color:var(--bone)}
+.move-feel{font-size:12.5px;color:var(--dust);line-height:1.45;margin:0}
+.move-feel b{color:var(--bone);font-weight:600}
+
+/* cta-row fixups */
+.cta-row .copy-btn{margin-top:0;width:100%}
+.cta-row .copy-open-btn{width:100%}
+
+/* ═══════════════════════════════════════════════
+   MOBILE UX — touch targets, sizing, readability
+   Applied on pointer:coarse (touch screens) AND max-width:760px
+   ═══════════════════════════════════════════════ */
+
+/* --- Touch target baseline: min 44px height on all interactive elements --- */
+@media (pointer:coarse), (max-width:760px) {
+  /* CTA buttons — most critical */
+  .copy-btn, .copy-open-btn {
+    padding:14px 12px;
+    font-size:14px;
+  }
+
+  /* Model selector tabs */
+  .model {
+    padding:12px 14px;
+    font-size:13px;
+  }
+
+  /* Mode tabs (Generator / Transitions) */
+  .mode-tab {
+    padding:14px 18px;
+    font-size:12px;
+  }
+
+  /* Movement picker chips — main interaction, must be thumb-friendly */
+  .pk {
+    padding:11px 13px;
+    font-size:13px;
+    min-height:44px;
+    display:inline-flex;
+    align-items:center;
+  }
+
+  /* Enhancer / Negative / Transition chips */
+  .chip {
+    padding:10px 13px;
+    font-size:13px;
+    min-height:44px;
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+  }
+
+  /* Template row pills */
+  .tpl {
+    padding:12px 16px;
+    font-size:13px;
+  }
+
+  /* Category filter pills */
+  .pill {
+    padding:10px 15px;
+    font-size:12px;
+  }
+
+  /* Share / Save / Load buttons */
+  .share-btn {
+    padding:13px;
+    font-size:12px;
+  }
+  .ghost-sm {
+    padding:13px 14px;
+    font-size:11.5px;
+    min-height:44px;
+  }
+
+  /* Generate button — already 51px but make it even more prominent */
+  .gen-btn {
+    font-size:28px;
+    padding:16px;
+  }
+
+  /* Selected move chips (draggable) */
+  .sel-chip {
+    padding:9px 12px;
+    font-size:12px;
+  }
+
+  /* Label font floor — mono labels were 10px, too small on 375px screens */
+  .lab {
+    font-size:11.5px;
+    margin:16px 0 7px;
+  }
+  .cam-group label {
+    font-size:11px;
+  }
+  .chip-cat {
+    font-size:11px;
+  }
+
+  /* Input / select — 16px prevents iOS auto-zoom on focus */
+  .in, .sel {
+    font-size:16px;
+  }
+  .cam-group .sel {
+    font-size:16px;
+  }
+
+  /* Output textarea — more room on mobile */
+  .out-box textarea {
+    min-height:140px;
+    font-size:14px;
+    line-height:1.6;
+  }
+
+  /* Picker max-height — give more room on phones */
+  .picker {
+    max-height:240px;
+  }
+
+  /* Mod buttons row — horizontal scroll rather than wrapping */
+  .mod-row {
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    padding-bottom:6px;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .mod-row::-webkit-scrollbar{display:none}
+  .mod-btn {
+    flex:0 0 auto;
+    padding:10px 14px;
+    font-size:13px;
+    min-height:44px;
+  }
+
+  /* Camera grid — full width on narrow phones */
+  .cam-grid {
+    grid-template-columns:1fr;
+  }
+
+  /* CTA row — stack on very narrow */
+  .cta-row {
+    grid-template-columns:1fr;
+  }
+  .cta-row .copy-btn, .cta-row .copy-open-btn {
+    width:100%;
+  }
+
+  /* Copy-open button — shorter text on mobile to avoid overflow */
+  #copyOpenBtn, #transOutBox .copy-open-btn {
+    font-size:13px;
+  }
+
+  /* Sub-collapsible summary — bigger tap zone */
+  .sub-adv>summary {
+    padding:14px 14px;
+    font-size:12px;
+  }
+
+  /* Sticky sel pill — higher on mobile to clear browser chrome */
+  #selPill {
+    bottom:24px !important;
+    font-size:17px !important;
+    padding:13px 20px !important;
+  }
+
+  /* Move name in card — readable but not huge */
+  .move-name {
+    font-size:20px;
+  }
+  .move-feel {
+    font-size:13px;
+  }
+}
+
+/* --- iOS input zoom prevention (16px rule regardless of breakpoint) --- */
+@media(max-width:768px) {
+  input[type="text"],
+  input[type="email"],
+  select,
+  textarea {
+    font-size:16px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   UX POLISH — v2.1
+   ═══════════════════════════════════════════════ */
+
+/* ---- 1. Template row scroll-hint fade mask ---- */
+.tpl-row {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 22px, #000 calc(100% - 22px), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 22px, #000 calc(100% - 22px), transparent 100%);
+}
+
+/* ---- 2. Mod-btn shortened labels on narrow screens ---- */
+@media(max-width:500px) {
+  .mod-btn {
+    font-size:0;
+    line-height:0;
+  }
+  .mod-btn::after {
+    content: attr(data-short);
+    font-size:13px;
+    font-weight:600;
+    font-family:var(--body);
+    line-height:normal;
+  }
+}
+
+/* ---- 3. 3D Studio mobile message (replaces silent hide) ---- */
+.studio-mobile-msg {
+  display:none;
+  padding:18px 16px;
+  font-size:14px;
+  color:var(--dust);
+  line-height:1.65;
+  text-align:center;
+  border:1px solid var(--line);
+  border-radius:10px;
+  margin:4px 0 8px;
+  background:var(--panel2);
+}
+.studio-mobile-msg strong {
+  color:var(--bone);
+  display:block;
+  font-size:16px;
+  margin-bottom:6px;
+}
+
+@media(max-width:480px) {
+  #advStudio {
+    display:block !important;
+  }
+  .studio-mobile-msg {
+    display:block;
+  }
+  #studio {
+    display:none;
+  }
+}
+
+/* ---- 4. Card grid — single column at 340px ---- */
+@media(max-width:340px) {
+  .grid {
+    grid-template-columns:1fr;
+  }
+}
+
+/* ---- 5. Sub-collapsible fade-in on open ---- */
+@keyframes subOpen {
+  from { opacity:0; transform:translateY(-5px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.sub-adv[open] .sub-body {
+  animation: subOpen .18s ease forwards;
+}
+
+/* ---- 6. Mode-view fade-in on tab switch ---- */
+@keyframes viewFadeIn {
+  from { opacity:0; }
+  to   { opacity:1; }
+}
+.mode-view.on {
+  animation: viewFadeIn .15s ease forwards;
+}
+
+/* ---- 7. Scroll hint gradient for mod-row ---- */
+.mod-row-wrap {
+  position:relative;
+}

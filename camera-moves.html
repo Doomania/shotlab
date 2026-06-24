@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Shot Lab deploy version: 2026-06-14-v2 -->
+<!-- Shot Lab deploy version: 2026-06-23-v1 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -8,7 +8,6 @@
 <meta name="description" content="38 camera movements with looping demos. Build AI video prompts for Seedance, Kling, Runway, Veo, Pika and Luma with live quality warnings. Free, no sign-in, runs in browser.">
 <link rel="canonical" href="https://shotlab-1qu.pages.dev/camera-moves">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Shot Lab">
 <meta property="og:title" content="Shot Lab — Camera Movement Prompt Generator">
@@ -17,28 +16,23 @@
 <meta property="og:image" content="https://shotlab-1qu.pages.dev/og-image.svg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Shot Lab — Camera Movement Prompt Generator">
 <meta name="twitter:description" content="38 camera movements with looping demos. Build AI video prompts for Seedance, Kling, Runway, Veo, Pika and Luma with live quality warnings. Free, no sign-in, runs in browser.">
 <meta name="twitter:image" content="https://shotlab-1qu.pages.dev/og-image.svg">
-<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WZ1SZQYXPC"></script>
 <script defer src="/data/moves.js"></script>
 <script defer src="/data/models.js"></script>
 <script defer src="/data/templates.js"></script>
+<script defer src="/data/camera.js"></script>
+<script defer src="/data/presets.js"></script>
+<script defer src="/data/transitions.js"></script>
 <script defer src="/js/app.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/app.css">
 <link rel="stylesheet" href="/css/main.css">
-<style>
-.share-btn{width:100%;margin-top:7px;font-family:var(--body);font-size:13px;font-weight:600;
-  background:none;color:var(--dust);border:1px solid var(--line);padding:9px 14px;
-  border-radius:8px;cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center;gap:7px}
-.share-btn:hover{color:var(--amber);border-color:var(--amber)}
-</style>
 </head>
 <body>
 <header>
@@ -48,123 +42,234 @@
 
 <div class="wrap">
 
-  <!-- ===== GENERATOR (first screen) ===== -->
+  <!-- ===== GENERATOR ===== -->
   <div class="gen">
-    <h2 class="section-h">Build a shot prompt</h2>
-    <p class="muted">Tap a starter, or set a subject + moves + model, then Generate &amp; Copy.</p>
 
-    <div class="tpl-row" id="tplRow"></div>
-
-    <label class="lab">Target model</label>
-    <div class="models" id="models"></div>
-
-    <label class="lab" for="subject">Subject / scene</label>
-    <input id="subject" class="in" placeholder="e.g. a lone swordsman in falling snow">
-
-    <label class="lab">Camera moves <span id="selCount" style="color:var(--amber)"></span></label>
-    <div class="sel-chips" id="selChips"></div>
-    <div class="picker" id="picker"></div>
-
-    <div class="two">
-      <div>
-        <label class="lab" for="ratio">Aspect</label>
-        <select id="ratio" class="sel">
-          <option value="9:16">9:16 vertical</option>
-          <option value="16:9">16:9 wide</option>
-          <option value="1:1">1:1 square</option>
-          <option value="2.39:1">2.39:1 scope</option>
-        </select>
-      </div>
-      <div>
-        <label class="lab" for="pace">Pacing</label>
-        <select id="pace" class="sel">
-          <option value="slow">Slow &amp; deliberate</option>
-          <option value="steady" selected>Steady &amp; controlled</option>
-          <option value="fast">Fast &amp; energetic</option>
-          <option value="frantic">Frantic &amp; chaotic</option>
-        </select>
-      </div>
+    <!-- Mode tabs -->
+    <div class="mode-tabs">
+      <button class="mode-tab on" id="tabGen" onclick="switchMode('generator')">Generator</button>
+      <button class="mode-tab" id="tabTrans" onclick="switchMode('transitions')">Transitions</button>
     </div>
 
-    <div class="two">
-      <div><label class="lab" for="style">Style / look</label><input id="style" class="in" placeholder="e.g. cinematic anime, noir"></div>
-      <div><label class="lab" for="light">Lighting</label><input id="light" class="in" placeholder="e.g. warm rim light, neon"></div>
-    </div>
+    <!-- ── GENERATOR VIEW ── -->
+    <div id="viewGen" class="mode-view on">
+      <h2 class="section-h">Build a shot prompt</h2>
+      <p class="muted">Tap a starter, or set a subject + moves + model, then Generate &amp; Copy.</p>
 
-    <button class="gen-btn" id="genBtn">Generate &#9656;</button>
+      <div class="tpl-row" id="tplRow"></div>
 
-    <div class="out-box" id="outBox">
-      <textarea id="out" readonly placeholder="Your prompt appears here — instantly."></textarea>
-      <button class="copy-btn" id="copyBtn">Copy prompt</button>
-          <button class="btn ghost share-btn" id="shareBtn" onclick="copyShareLink()" title="Copy a link that restores this exact shot for anyone">
-            &#128279; Copy share link
-          </button>
-          <!-- Output improvement buttons -->
-          <div class="mod-row" id="modRow" style="display:none">
-            <div class="mod-label">Adjust:</div>
-            <button class="mod-btn" data-label="More cinematic" onclick="modifyPrompt('cinematic')">More cinematic</button>
-            <button class="mod-btn" data-label="More dynamic" onclick="modifyPrompt('dynamic')">More dynamic</button>
-            <button class="mod-btn" data-label="Shorter" onclick="modifyPrompt('shorter')">Shorter</button>
-            <button class="mod-btn" data-label="More anime" onclick="modifyPrompt('anime')">More anime</button>
-            <button class="mod-btn" data-label="More realistic" onclick="modifyPrompt('realistic')">More realistic</button>
-            <button class="mod-btn" data-label="+ Handheld" onclick="modifyPrompt('handheld')">+ Handheld</button>
-            <button class="mod-btn" data-label="Music video" onclick="modifyPrompt('musicvideo')">Music video</button>
+      <label class="lab">Target model</label>
+      <div class="models" id="models"></div>
+
+      <label class="lab" for="subject">Subject / scene</label>
+      <input id="subject" class="in" placeholder="e.g. a lone swordsman in falling snow">
+
+      <label class="lab">Camera moves <span id="selCount" style="color:var(--amber)"></span></label>
+      <div class="sel-chips" id="selChips"></div>
+      <div class="picker" id="picker"></div>
+
+      <div class="two">
+        <div>
+          <label class="lab" for="ratio">Aspect</label>
+          <select id="ratio" class="sel">
+            <option value="9:16">9:16 vertical</option>
+            <option value="16:9">16:9 wide</option>
+            <option value="1:1">1:1 square</option>
+            <option value="2.39:1">2.39:1 scope</option>
+          </select>
+        </div>
+        <div>
+          <label class="lab" for="pace">Pacing</label>
+          <select id="pace" class="sel">
+            <option value="slow">Slow &amp; deliberate</option>
+            <option value="steady" selected>Steady &amp; controlled</option>
+            <option value="fast">Fast &amp; energetic</option>
+            <option value="frantic">Frantic &amp; chaotic</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="two">
+        <div><label class="lab" for="style">Style / look</label><input id="style" class="in" placeholder="e.g. cinematic anime, noir"></div>
+        <div><label class="lab" for="light">Lighting</label><input id="light" class="in" placeholder="e.g. warm rim light, neon"></div>
+      </div>
+
+      <!-- Camera & Lens -->
+      <details class="sub-adv" id="advCam">
+        <summary>&#128247; Camera &amp; Lens <span class="tagx">OPTIONAL</span><span class="chev">&#9662;</span></summary>
+        <div class="sub-body">
+          <div class="cam-grid">
+            <div class="cam-group">
+              <label>Camera body</label>
+              <select id="camBrand" class="sel"><option value="">&#8212; Any camera &#8212;</option></select>
+            </div>
+            <div class="cam-group">
+              <label>Focal length</label>
+              <select id="camFocal" class="sel"><option value="">&#8212; Any focal &#8212;</option></select>
+            </div>
+            <div class="cam-group">
+              <label>Lighting type</label>
+              <select id="camLight" class="sel"><option value="">&#8212; Any lighting &#8212;</option></select>
+            </div>
+            <div class="cam-group">
+              <label>Composition</label>
+              <select id="camComp" class="sel"><option value="">&#8212; Any comp &#8212;</option></select>
+            </div>
           </div>
-          <!-- Why this prompt works -->
-          <div id="whyBox" class="why-box" style="display:none"></div>
+        </div>
+      </details>
+
+      <!-- Enhancers -->
+      <details class="sub-adv" id="advEnhancers">
+        <summary>&#9889; Enhancers <span class="tagx">OPTIONAL</span><span class="chev">&#9662;</span></summary>
+        <div class="sub-body">
+          <div id="enhancerGrid"></div>
+        </div>
+      </details>
+
+      <!-- Negative prompt -->
+      <details class="sub-adv" id="advNeg">
+        <summary>&#128683; Negative prompt <span class="tagx">OPTIONAL</span><span class="chev">&#9662;</span></summary>
+        <div class="sub-body">
+          <div id="negGrid"></div>
+        </div>
+      </details>
+
+      <button class="gen-btn" id="genBtn">Generate &#9656;</button>
+
+      <div class="out-box" id="outBox">
+        <textarea id="out" readonly placeholder="Your prompt appears here — instantly."></textarea>
+
+        <!-- CTA row: Copy + Copy & Open -->
+        <div class="cta-row">
+          <button class="copy-btn" id="copyBtn">Copy prompt</button>
+          <button class="copy-open-btn" id="copyOpenBtn">Copy &amp; open <span id="modelSite">Seedance</span> &#8599;</button>
+        </div>
+
+        <button class="btn ghost share-btn" id="shareBtn" onclick="copyShareLink()" title="Copy a link that restores this exact shot for anyone">
+          &#128279; Copy share link
+        </button>
+
+        <!-- Save / Load project -->
+        <div class="saveload-row">
+          <button class="ghost-sm" onclick="saveProject()">&#11015; Save project</button>
+          <label class="ghost-sm">&#11014; Load project<input type="file" accept=".json" style="display:none" onchange="loadProject(event)"></label>
+        </div>
+
+        <!-- Output improvement buttons -->
+        <div class="mod-row" id="modRow" style="display:none">
+          <div class="mod-label">Adjust:</div>
+          <button class="mod-btn" data-label="More cinematic" data-short="Cinematic" onclick="modifyPrompt('cinematic')">More cinematic</button>
+          <button class="mod-btn" data-label="More dynamic" data-short="Dynamic" onclick="modifyPrompt('dynamic')">More dynamic</button>
+          <button class="mod-btn" data-label="Shorter" data-short="Shorter" onclick="modifyPrompt('shorter')">Shorter</button>
+          <button class="mod-btn" data-label="More anime" data-short="Anime" onclick="modifyPrompt('anime')">More anime</button>
+          <button class="mod-btn" data-label="More realistic" data-short="Realistic" onclick="modifyPrompt('realistic')">More realistic</button>
+          <button class="mod-btn" data-label="+ Handheld" data-short="Handheld" onclick="modifyPrompt('handheld')">+ Handheld</button>
+          <button class="mod-btn" data-label="Music video" data-short="Music vid" onclick="modifyPrompt('musicvideo')">Music video</button>
+        </div>
+
+        <!-- Why this prompt works -->
+        <div id="whyBox" class="why-box" style="display:none"></div>
+      </div>
+
+      <div class="warns" id="warns"></div>
     </div>
 
-    <div class="warns" id="warns"></div>
-  </div>
+    <!-- ── TRANSITIONS VIEW ── -->
+    <div id="viewTrans" class="mode-view">
+      <h2 class="section-h">Transition Builder</h2>
+      <p class="muted">Describe the cut between two shots — get a paste-ready transition prompt.</p>
+
+      <label class="lab" for="transA">Shot A &#8212; ending frame</label>
+      <input id="transA" class="in" placeholder="e.g. warrior raises sword in golden light">
+
+      <label class="lab">Transition type <span style="color:var(--dust);font-size:10px">(tap to select)</span></label>
+      <div id="transGrid" class="trans-grid"></div>
+
+      <label class="lab" for="transB">Shot B &#8212; opening frame</label>
+      <input id="transB" class="in" placeholder="e.g. extreme close-up of enemy's eye, narrow alley">
+
+      <div class="two" style="margin-top:8px">
+        <div>
+          <label class="lab" for="transStyle">Style / mood</label>
+          <input id="transStyle" class="in" placeholder="cinematic anime, noir&#8230;">
+        </div>
+        <div>
+          <label class="lab" for="transPace">Pace</label>
+          <select id="transPace" class="sel">
+            <option value="slow">Slow</option>
+            <option value="steady" selected>Steady</option>
+            <option value="fast">Fast</option>
+            <option value="frantic">Frantic</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="gen-btn" id="genTransBtn" style="margin-top:16px">Build transition &#9656;</button>
+
+      <div class="out-box" id="transOutBox" style="margin-top:14px">
+        <textarea id="transOut" readonly placeholder="Transition prompt appears here."></textarea>
+        <div class="cta-row">
+          <button class="copy-btn" onclick="copy(document.getElementById('transOut').value)">Copy prompt</button>
+          <button class="copy-open-btn" onclick="copyTransOpen()">Copy &amp; open <span id="transModelSite">Seedance</span> &#8599;</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.gen -->
 
   <!-- ===== ADVANCED: 3D camera studio ===== -->
   <details class="adv" id="advStudio">
     <summary>3D Camera Studio <span class="tagx">ADVANCED</span><span class="chev">&#9660;</span></summary>
     <div class="adv-body">
-<div id="studio">
-    <p class="lede">Drag inside the frame to swing the camera around the dummy. Scroll to dolly closer or further. Mark a <b>Start</b> and <b>End</b> position, set a duration, hit <b>Play</b> — the studio reads the motion and writes the matching prompt.</p>
-    <div class="studio">
-      <div class="stagewrap">
-        <canvas id="director"></canvas>
-        <div class="rec" id="rec"><span class="dot"></span>REC</div>
-        <div class="povbox">
-          <span class="tag">LENS POV</span>
-          <canvas id="pov"></canvas>
-          <div class="reticle"></div>
+      <div class="studio-mobile-msg">
+          <strong>🎬 3D Camera Studio</strong>
+          Open Shot Lab on a desktop browser to position your camera in 3D space, mark start and end poses, and get the move as a prompt.
         </div>
-        <div class="hint">drag = orbit · scroll = dolly</div>
+        <div id="studio">
+        <p class="lede">Drag inside the frame to swing the camera around the dummy. Scroll to dolly closer or further. Mark a <b>Start</b> and <b>End</b> position, set a duration, hit <b>Play</b> — the studio reads the motion and writes the matching prompt.</p>
+        <div class="studio">
+          <div class="stagewrap">
+            <canvas id="director"></canvas>
+            <div class="rec" id="rec"><span class="dot"></span>REC</div>
+            <div class="povbox">
+              <span class="tag">LENS POV</span>
+              <canvas id="pov"></canvas>
+              <div class="reticle"></div>
+            </div>
+            <div class="hint">drag = orbit &middot; scroll = dolly</div>
+          </div>
+          <div class="panel-c">
+            <h3>Shot Controls</h3>
+            <p class="small">Position the lens, then capture the two key positions.</p>
+            <div class="slider">
+              <div class="lab"><span>Distance</span><b id="vDist">6.0</b></div>
+              <input type="range" id="sDist" min="2.5" max="14" step="0.1" value="6">
+            </div>
+            <div class="slider">
+              <div class="lab"><span>Height</span><b id="vHt">1.6</b></div>
+              <input type="range" id="sHt" min="0.2" max="6" step="0.1" value="1.6">
+            </div>
+            <div class="markrow">
+              <button class="btn" id="setStart">Set Start</button>
+              <button class="btn" id="setEnd">Set End</button>
+            </div>
+            <div class="slider">
+              <div class="lab"><span>Duration</span><b id="vDur">4.0s</b></div>
+              <input type="range" id="sDur" min="1" max="12" step="0.5" value="4">
+            </div>
+            <div class="markrow">
+              <button class="btn primary" id="play">&#9654; Play move</button>
+              <button class="btn ghost" id="reset">Reset</button>
+            </div>
+            <div class="readout">
+              <div class="det idle" id="detName">Mark a start and end</div>
+              <textarea id="studioOut" readonly placeholder="The generated prompt appears here after Play."></textarea>
+              <div class="row"><button class="btn primary" id="copyStudio">Copy prompt</button></div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="panel-c">
-        <h3>Shot Controls</h3>
-        <p class="small">Position the lens, then capture the two key positions.</p>
-        <div class="slider">
-          <div class="lab"><span>Distance</span><b id="vDist">6.0</b></div>
-          <input type="range" id="sDist" min="2.5" max="14" step="0.1" value="6">
-        </div>
-        <div class="slider">
-          <div class="lab"><span>Height</span><b id="vHt">1.6</b></div>
-          <input type="range" id="sHt" min="0.2" max="6" step="0.1" value="1.6">
-        </div>
-        <div class="markrow">
-          <button class="btn" id="setStart">Set Start</button>
-          <button class="btn" id="setEnd">Set End</button>
-        </div>
-        <div class="slider">
-          <div class="lab"><span>Duration</span><b id="vDur">4.0s</b></div>
-          <input type="range" id="sDur" min="1" max="12" step="0.5" value="4">
-        </div>
-        <div class="markrow">
-          <button class="btn primary" id="play">▶ Play move</button>
-          <button class="btn ghost" id="reset">Reset</button>
-        </div>
-        <div class="readout">
-          <div class="det idle" id="detName">Mark a start and end</div>
-          <textarea id="studioOut" readonly placeholder="The generated prompt appears here after Play."></textarea>
-          <div class="row"><button class="btn primary" id="copyStudio">Copy prompt</button></div>
-        </div>
-      </div>
-    </div>
-  </div>
     </div>
   </details>
 
@@ -175,26 +280,32 @@
   <div class="grid" id="grid" role="list" aria-label="Camera movement library"></div>
 
   <noscript><ul id="move-list-seo" style="display:none"><li>Slow Dolly In</li><li>Slow Dolly Out</li><li>Fast Dolly In</li><li>Vertigo Dolly Zoom</li><li>Extreme Macro Zoom</li><li>Cosmic Hyper Zoom</li><li>Optical Zoom In / Out</li><li>Snap Zoom</li><li>Over the Shoulder</li><li>Fisheye / Peephole</li><li>Reveal from Behind</li><li>Through Shot</li><li>Reveal from Blur</li><li>Rack Focus</li><li>Tilt Up</li><li>Tilt Down</li><li>Pan</li><li>Truck (Left / Right)</li><li>Static</li><li>Orbit 180° / 360°</li><li>Slow Cinematic Arc</li><li>Pedestal Up / Down</li><li>Crane Up</li><li>Crane Down</li><li>Drone Fly-Over</li><li>God's Eye View</li><li>Drone Dive (FPV)</li><li>Handheld</li><li>Whip Pan</li><li>Dutch Angle</li><li>Steadicam Glide</li><li>Leading Shot</li><li>Following Shot</li><li>Side Tracking</li><li>POV Walk</li><li>Low Angle Push-In</li><li>High Angle Pull-Back</li><li>360 Hero Spin</li></ul></noscript>
-  <div class="footer"><a href="/about.html" style="color:var(--dust);text-decoration:none;font-family:var(--mono);font-size:10.5px">About</a> &middot; <a href="/privacy-policy.html" style="color:var(--dust);text-decoration:none;font-family:var(--mono);font-size:10.5px">Privacy</a> &middot; <a href="/terms.html" style="color:var(--dust);text-decoration:none;font-family:var(--mono);font-size:10.5px">Terms</a> &middot; SHOT LAB &middot; <a href="https://shotlab-1qu.pages.dev" style="color:var(--amber);text-decoration:none">shotlab-1qu.pages.dev</a> &middot; nothing leaves this page &middot; <span style="opacity:.4">2026-06-14-v2</span></div>
+
+  <div class="footer">
+    <a href="/about.html" style="color:var(--dust);text-decoration:none;font-family:var(--mono);font-size:10.5px">About</a>
+    &middot;
+    <a href="/privacy-policy.html" style="color:var(--dust);text-decoration:none;font-family:var(--mono);font-size:10.5px">Privacy</a>
+    &middot;
+    <a href="/terms.html" style="color:var(--dust);text-decoration:none;font-family:var(--mono);font-size:10.5px">Terms</a>
+    &middot; SHOT LAB &middot;
+    <a href="https://shotlab-1qu.pages.dev" style="color:var(--amber);text-decoration:none">shotlab-1qu.pages.dev</a>
+    &middot; nothing leaves this page &middot;
+    <span style="opacity:.4">2026-06-23-v1</span>
+  </div>
 </div>
 
 <div class="toast" id="toast">Copied to clipboard</div>
 
-
-
 <script>
-/* show improvement buttons when output is populated */
+/* Show improvement buttons when output is populated */
 (function(){
-  var orig = window.generate;
-  // wait for app.js to define generate
   function hookGenerate(){
-    if(typeof generate !== 'function'){ setTimeout(hookGenerate, 50); return; }
-    var _g = generate;
-    window.generate = function(){
-      _g.apply(this, arguments);
-      var row = document.getElementById("modRow");
-      var out = document.getElementById("out");
-      if(row && out && out.value.trim()) row.style.display = "flex";
+    if(typeof generate!=='function'){setTimeout(hookGenerate,50);return;}
+    var _g=generate;
+    window.generate=function(){
+      _g.apply(this,arguments);
+      var row=document.getElementById("modRow"),out=document.getElementById("out");
+      if(row&&out&&out.value.trim())row.style.display="flex";
     };
   }
   hookGenerate();
