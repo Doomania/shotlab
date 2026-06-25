@@ -385,9 +385,10 @@ function renderTransGrid(){
     var row=document.createElement('div');row.className='chip-row';
     cats[cat].forEach(function(tr){
       var b=document.createElement('button');
-      b.className='chip'+(activeTransition===tr.id?' on':'');
+      b.className='chip tp-chip'+(activeTransition===tr.id?' on':'');
       b.dataset.id=tr.id;
-      b.innerHTML=tr.label+(tr.zh?' <span class="chip-zh">'+tr.zh+'</span>':'');
+      b.innerHTML='<div class="tp" data-tp="'+tr.id+'"><div class="tp-a"></div><div class="tp-b"></div><div class="tp-fx"></div></div>'+
+        '<span class="chip-lbl">'+tr.label+(tr.zh?' <span class="chip-zh">'+tr.zh+'</span>':'')+'</span>';
       b.title=tr.t;
       b.onclick=function(){
         activeTransition=activeTransition===tr.id?null:tr.id;
@@ -588,14 +589,26 @@ if('IntersectionObserver' in window){
 /* lazy-load Three.js only when 3D panel opens */
 (function(){
   var loaded=false;var advEl=document.getElementById('advStudio');if(!advEl)return;
+  function tryResize(){requestAnimationFrame(function(){requestAnimationFrame(function(){try{resize3D();}catch(_){}});});}
   function loadThree(){
     if(loaded)return;loaded=true;
     var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
-    s.onload=function(){try{init3D();}catch(e){console.error('3D init failed:',e);}};
+    s.onload=function(){
+      try{init3D();setTimeout(function(){try{resize3D();}catch(_){}},80);}
+      catch(e){
+        console.error('3D init failed:',e);
+        var sw=document.getElementById('studio');
+        if(sw)sw.insertAdjacentHTML('afterbegin','<div style="padding:12px 16px;font-family:var(--mono);font-size:11px;color:var(--red);background:rgba(214,71,58,.1);border:1px solid var(--red);border-radius:8px;margin-bottom:12px">3D init error: '+e.message+'</div>');
+      }
+    };
     s.onerror=function(){var sw=document.getElementById('studio');if(sw)sw.innerHTML='<div style="padding:40px;font-family:var(--mono);color:var(--dust);font-size:13px">3D engine could not load \u2014 check your connection.</div>';};
     document.head.appendChild(s);
   }
-  advEl.addEventListener('toggle',function(e){if(e.target.open){loadThree();requestAnimationFrame(function(){requestAnimationFrame(function(){try{resize3D();}catch(_){}});});}});
+  /* toggle event (primary) */
+  advEl.addEventListener('toggle',function(e){if(e.target.open){loadThree();tryResize();}});
+  /* summary click fallback */
+  var sum=advEl.querySelector('summary');
+  if(sum)sum.addEventListener('click',function(){setTimeout(function(){if(advEl.open)loadThree();},30);});
 })();
 
 /* ═══════════════════════════════════════════════════
